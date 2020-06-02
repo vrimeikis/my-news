@@ -2,7 +2,11 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Session;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -51,5 +55,33 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         return parent::render($request, $exception);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param AuthenticationException $exception
+     * @return JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['message' => $exception->getMessage()], JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
+        $guard = Arr::get($exception->guards(), 0);
+
+        switch ($guard) {
+            case 'admin':
+                $loginRouteName = 'admin.login';
+                break;
+            default:
+                $loginRouteName = 'login';
+                break;
+        }
+
+        // Don't redirect to url from go after success login
+        Session::forget('url.intended');
+
+        return redirect()->guest(route($loginRouteName));
     }
 }
