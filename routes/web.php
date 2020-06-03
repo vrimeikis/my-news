@@ -22,7 +22,12 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
 
-Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
+
+//----------------------------------------
+// Admin side routes
+//----------------------------------------
+
+    Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Route::namespace('Auth')->group(function () {
         Route::get('login', 'LoginController@showLoginForm')->name('login');
         Route::post('login', 'LoginController@login')->name('login.post');
@@ -41,5 +46,7 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('/', 'AdminHomeController')->name('home');
+
+        Route::resource('employee', 'EmployeeController');
     });
 });
