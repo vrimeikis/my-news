@@ -1,28 +1,23 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 
+/**
+ * Class HomeController
+ * @package App\Http\Controllers
+ */
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * @return View
      */
-    public function __construct()
+    public function __invoke(): View
     {
-        $this->middleware('auth');
+        return view('front.welcome');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        return view('home');
-    }
 }

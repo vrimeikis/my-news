@@ -14,13 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController')->name('index');
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
+
+Route::middleware('verified')->group(function () {
+    Route::get('account', 'AccountController@index')->name('account.index');
+});
 
 
 //----------------------------------------
