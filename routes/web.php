@@ -21,6 +21,8 @@ Auth::routes(['verify' => true]);
 
 Route::middleware('verified')->group(function () {
     Route::get('account', 'AccountController@index')->name('account.index');
+    Route::get('account/edit', 'AccountController@edit')->name('account.edit');
+    Route::put('account/update', 'AccountController@update')->name('account.update');
 });
 
 
