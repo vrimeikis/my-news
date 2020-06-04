@@ -30,7 +30,7 @@ Route::middleware('verified')->group(function () {
 // Admin side routes
 //----------------------------------------
 
-    Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
+Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Route::namespace('Auth')->group(function () {
         Route::get('login', 'LoginController@showLoginForm')->name('login');
         Route::post('login', 'LoginController@login')->name('login.post');
@@ -51,5 +51,6 @@ Route::middleware('verified')->group(function () {
         Route::get('/', 'AdminHomeController')->name('home');
 
         Route::resource('employee', 'EmployeeController');
+        Route::resource('article', 'ArticleController');
     });
 });
