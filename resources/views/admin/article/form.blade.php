@@ -54,6 +54,11 @@
 
                 <div class="form-group">
                     <label for="poster">{{ __('fields.poster') }}</label>
+
+                    @isset($item->poster)
+                        <img src="{{ \Illuminate\Support\Facades\Storage::url($item->poster) }}" width="200">
+                    @endisset
+
                     <input class="@error('poster') is-invalid @enderror"
                            type="file"
                            name="poster"
@@ -69,11 +74,11 @@
 
                 <div class="form-group">
                     <label for="content">{{ __('Content') }}</label>
-                    <textarea class="form-control @error('poster') is-invalid @enderror"
-                           name="content"
-                           id="content"
-                    >{{ old('email', $item->poster ?? '') }}</textarea>
-                    @error('poster')
+                    <textarea class="form-control @error('content') is-invalid @enderror"
+                              name="content"
+                              id="content"
+                    >{{ old('content', $item->content ?? '') }}</textarea>
+                    @error('content')
                     <div class="alert-danger">
                         {{ $message }}
                     </div>
@@ -82,13 +87,17 @@
 
                 <div class="form-group">
                     <label for="user_id">{{ __('fields.author') }}</label>
-                    <select class="form-control @error('password') is-invalid @enderror"
-                           name="user_id"
-                           id="user_id"
+                    <select class="form-control @error('user_id') is-invalid @enderror"
+                            name="user_id"
+                            id="user_id"
                     >
                         <option value="">---</option>
+
+                        @foreach($authors as $authorId => $author)
+                            <option value="{{ $authorId }}" @if(isset($item->user_id) && $item->user_id == $authorId) selected @endif>{{ $author }}</option>
+                        @endforeach
                     </select>
-                    @error('password')
+                    @error('user_id')
                     <div class="alert-danger">
                         {{ $message }}
                     </div>
@@ -102,6 +111,7 @@
                            name="active"
                            id="active"
                            value="1"
+                           @if(old('active', $item->active ?? null)) checked @endif
                     >
                 </div>
             </div>

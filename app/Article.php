@@ -6,6 +6,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -48,4 +49,12 @@ class Article extends Model
         'user_id',
         'active',
     ];
+
+    /**
+     * @return HasOne
+     */
+    public function author(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }
