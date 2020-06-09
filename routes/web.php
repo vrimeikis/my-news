@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController')->name('index');
+Route::get('article/{slug}', 'ArticleController@show')->name('article.show');
 
 Auth::routes(['verify' => true]);
 

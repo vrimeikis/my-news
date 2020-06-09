@@ -1,17 +1,12 @@
 <?php
-
-declare(strict_types = 1);
-
+declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Repositories\ArticleRepository;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-/**
- * Class HomeController
- * @package App\Http\Controllers
- */
-class HomeController extends Controller
+class ArticleController extends Controller
 {
     /**
      * @var ArticleRepository
@@ -19,7 +14,7 @@ class HomeController extends Controller
     private $articleRepository;
 
     /**
-     * HomeController constructor.
+     * ArticleController constructor.
      * @param ArticleRepository $articleRepository
      */
     public function __construct(ArticleRepository $articleRepository)
@@ -27,14 +22,10 @@ class HomeController extends Controller
         $this->articleRepository = $articleRepository;
     }
 
-    /**
-     * @return View
-     */
-    public function __invoke(): View
+    public function show(string $slug): View
     {
-        $articles = $this->articleRepository->getActivePaginate();
+        $article = $this->articleRepository->getActiveBySlug($slug);
 
-        return view('front.welcome', ['articles' => $articles]);
+        return view('front.article', ['article' => $article]);
     }
-
 }
