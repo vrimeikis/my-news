@@ -21,9 +21,13 @@ Auth::routes(['verify' => true]);
 
 
 Route::middleware('verified')->group(function () {
-    Route::get('account', 'AccountController@index')->name('account.index');
-    Route::get('account/edit', 'AccountController@edit')->name('account.edit');
-    Route::put('account/update', 'AccountController@update')->name('account.update');
+    Route::prefix('account')->name('account.')->group(function () {
+        Route::get('/', 'AccountController@index')->name('index');
+        Route::get('edit', 'AccountController@edit')->name('edit');
+        Route::put('update', 'AccountController@update')->name('update');
+
+        Route::resource('article', 'Account\\ArticleController')->except(['show', 'destroy']);
+    });
 });
 
 

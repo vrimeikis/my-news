@@ -63,7 +63,7 @@
                            type="file"
                            name="poster"
                            id="poster"
-                           value="{{ old('email', $item->poster ?? '') }}"
+                           value=""
                     >
                     @error('poster')
                     <div class="alert-danger">
