@@ -102,6 +102,10 @@ class ArticleController extends Controller
         try {
             $article->update($request->getData());
 
+            if ($article->wasChanged()) {
+                $this->articleRepository->changeActive($article->id, false);
+            }
+
             return redirect()->route('account.article.index')
                 ->with('success', 'Article updated.');
         } catch (Exception $exception) {

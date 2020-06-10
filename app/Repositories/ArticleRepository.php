@@ -52,4 +52,16 @@ class ArticleRepository
             ->orderByDesc('created_at')
             ->paginate();
     }
+
+    /**
+     * @param int $id
+     * @param bool $active
+     * @return int
+     */
+    public function changeActive(int $id, bool $active = false): int
+    {
+        return Article::query()
+            ->where('id', $id)
+            ->update(['active' => $active]);
+    }
 }
