@@ -6,13 +6,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
+
 
 /**
- * Class Article
+ * App\Article
  *
- * @package App
  * @property int $id
  * @property string $title
  * @property string $slug
@@ -22,6 +24,9 @@ use Illuminate\Support\Carbon;
  * @property int $active
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read User|null $author
+ * @property-read Collection|ArticleComment[] $comments
+ * @property-read int|null $comments_count
  * @method static Builder|Article newModelQuery()
  * @method static Builder|Article newQuery()
  * @method static Builder|Article query()
@@ -56,5 +61,13 @@ class Article extends Model
     public function author(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(ArticleComment::class);
     }
 }

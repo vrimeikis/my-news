@@ -30,6 +30,8 @@ Route::middleware('verified')->group(function () {
     });
 });
 
+Route::post('comment', 'CommentController@store')->name('comment.store');
+
 
 //----------------------------------------
 // Admin side routes
