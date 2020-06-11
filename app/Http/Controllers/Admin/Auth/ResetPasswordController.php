@@ -6,10 +6,15 @@ namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
+use Illuminate\View\View;
 
 /**
  * Class ResetPasswordController
@@ -27,7 +32,7 @@ class ResetPasswordController extends Controller
     /**
      * @param Request $request
      * @param null $token
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
     public function showResetForm(Request $request, $token = null)
     {
@@ -46,7 +51,7 @@ class ResetPasswordController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
+     * @return Guard|StatefulGuard
      */
     protected function guard()
     {

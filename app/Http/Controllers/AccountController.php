@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Front\AccountUpdateRequest;
 use App\User;
+use Exception;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AccountController extends Controller
@@ -47,7 +47,7 @@ class AccountController extends Controller
 
             $user->update($request->getData());
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return back()->with('danger', $exception->getMessage())
                 ->withInput();
         }
